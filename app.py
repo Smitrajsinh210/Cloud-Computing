@@ -67,7 +67,7 @@ st.title("☁️ Cloud Notes Sharing App")
 st.subheader("Write, save, and share your notes easily.")
 
 # Check if viewing a shared note
-query_params =  st.query_params()
+query_params = st.experimental_get_query_params()
 if "view" in query_params:
     link_id = query_params["view"][0]
     shared_note = get_shared_note(link_id)
