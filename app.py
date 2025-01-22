@@ -40,16 +40,6 @@ def delete_note(filename):
     if os.path.exists(file_path):
         os.remove(file_path)
 
-# Function to generate a shareable link
-def generate_shareable_link(filename):
-    with open(SHARED_LINKS_FILE, "r") as file:
-        shared_links = json.load(file)
-    link_id = filename.split(".")[0]
-    shared_links[link_id] = filename
-    with open(SHARED_LINKS_FILE, "w") as file:
-        json.dump(shared_links, file)
-    return f"http://localhost:8501/?view={link_id}"
-
 # Function to get a shared note
 def get_shared_note(link_id):
     with open(SHARED_LINKS_FILE, "r") as file:
@@ -106,12 +96,13 @@ if notes:
                     st.success(f"Deleted `{note['filename']}`!")
                     time.sleep(1)  # Add a small delay before refreshing
                     st.experimental_set_query_params(reload="true")
-            with col2:
-                share_link = generate_shareable_link(note["filename"])
-                st.text_input("Shareable Link", share_link, key=f"share_{note['filename']}")
+           
 else:
     st.info("No notes found. Add a new note above.")
 
 # Footer
 st.markdown("---")
 st.write("🔒 **Notes are securely stored on this cloud app.**")
+
+
+
